@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-import os
+from celery.schedules import crontab
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "mainapp",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -129,3 +131,13 @@ CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_RESULT_BACKEND = "redis://redis:6379"
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
+
+
+CELERY_BEAT_SCHEDULE = {
+    "fetch-stock-data-every-minute": {
+        "task": "mainapp.tasks.fetch_stock_data",  # The name of the task to be run
+        "schedule": crontab(
+            minute="*/1"
+        ),  # Every minute (you can adjust the frequency here)
+    },
+}
