@@ -1,0 +1,52 @@
+{% extends 'mainapp/basic.html' %}
+{% load static %}
+
+
+{% block title %}
+StockPicker
+{% endblock %}
+
+
+
+{% block css %}
+
+{% endblock %}
+
+
+
+
+{% block body %}
+<div class="container">
+    <h1>Live Stock Tracker</h1>
+    <p>select stock</p>
+    <form action={% url 'stockTracker' %} method="post">
+        {% csrf_token %}
+        <label for="stockpicker">Select Stocks</label>
+        <select class="form-select form-select-lg mb-3" aria-label="Large select example" name="ticker_symbols"
+            id="stockpicker" multiple>
+
+            {% for i in stockpicker %}
+            <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+        </select>
+        <div class="d-grid gap-2">
+            <br>
+            <input class="btn btn-primary" type="submit" value="Submit">
+
+        </div>
+    </form>
+</div>
+
+
+
+{% endblock %}
+
+
+
+
+
+{% block js %}
+<script>
+
+</script>
+{% endblock %}

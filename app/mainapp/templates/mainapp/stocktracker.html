@@ -1,0 +1,49 @@
+{% extends 'mainapp/basic.html' %}
+{% load static %}
+{% load custom_filter %}
+
+{% block title %}
+StockTracker
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Live stock tracker</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Current Price</th>
+                <th scope="col">Market Cap</th>
+                <th scope="col">PE Ratio</th>
+                <th scope="col">Sector</th>
+                <th scope="col">Change</th>
+                <th scope="col">Percent Change</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in details %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ row|get_item:"Name" }}</td>
+                <td>{{ row|get_item:"Current_Price" }}</td>
+                <td>{{ row|get_item:"Market_Cap"|billions }}</td>
+                <td>{{ row|get_item:"PE_Ratio" }}</td>
+                <td>{{ row|get_item:"Sector" }}</td>
+                <td>{{ row|get_item:"Change" }}</td>
+                <td>{{ row|get_item:"Percent_Change" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{% block js %}
+<script>
+</script>
+{% endblock %}
